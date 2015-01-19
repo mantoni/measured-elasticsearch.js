@@ -1,0 +1,39 @@
+{
+  "name": "measured-elasticsearch",
+  "version"         : "0.0.0",
+  "description": "Measured Elasticsearch Reporter",
+  "keywords": [
+    "measured",
+    "metrics",
+    "elasticsearch",
+    "reporter"
+  ],
+  "author": "Maximilian Antoni <mail@maxantoni.de> (http://maxantoni.de)",
+  "homepage": "https://github.com/mantoni/measured-elasticsearch.js",
+  "engines": {
+    "node": ">=0.10"
+  },
+  "main": "lib/reporter.js",
+  "scripts": {
+    "lint": "jslint --color \"**/*.js\"",
+    "start": "mocha --watch",
+    "test": "npm run lint && mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mantoni/measured-elasticsearch.js.git"
+  },
+  "devDependencies": {
+    "elasticsearch": "^3.1",
+    "measured": "^0.1",
+    "mocha": "^2.1",
+    "jslint": "^0.7",
+    "sinon": "^1.12"
+  },
+  "files": [
+    "lib",
+    "README.md",
+    "LICENSE"
+  ],
+  "license": "MIT"
+}
