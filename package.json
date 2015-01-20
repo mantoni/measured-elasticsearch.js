@@ -1,6 +1,6 @@
 {
   "name": "measured-elasticsearch",
-  "version"         : "0.0.0",
+  "version": "0.0.0",
   "description": "Measured Elasticsearch Reporter",
   "keywords": [
     "measured",
@@ -22,6 +22,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/mantoni/measured-elasticsearch.js.git"
+  },
+  "dependencies": {
+    "dateformat": "^1.0"
   },
   "devDependencies": {
     "elasticsearch": "^3.1",
