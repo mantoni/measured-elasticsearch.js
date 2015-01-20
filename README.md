@@ -30,6 +30,8 @@ reporter.start(60, measured.units.SECONDS);
       Defaults to `yyyy.mm`. Uses [dateformat][].
     - `timestampFieldname` the field name of the timestamp. Defaults to
       `@timestamp`.
+    - `additionalFields` object with additional fields to be included for each
+      metric
 - `sendBulk()` sends a bulk update using the elasticsearch client
 - `start([interval[, unit]])` performs a ping request and once successful sends
   bulk updates every `interval * unit` where `interval` defaults to `60` and

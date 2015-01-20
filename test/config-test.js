@@ -81,4 +81,24 @@ describe('config', function () {
     });
   });
 
+  it('adds configured additional fields', function () {
+    reporter = api.forClient(client, {
+      additionalFields : {
+        server   : 'cheesy-server-name',
+        instance : 1
+      }
+    });
+    reporter.addCollection(collection);
+
+    reporter.sendBulk();
+
+    sinon.assert.calledOnce(client.bulk);
+    sinon.assert.calledWith(client.bulk, {
+      body : [sinon.match.object, sinon.match({
+        server   : 'cheesy-server-name',
+        instance : 1
+      })]
+    });
+  });
+
 });
