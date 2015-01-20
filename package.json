@@ -1,7 +1,7 @@
 {
   "name": "measured-elasticsearch",
   "version": "0.0.0",
-  "description": "Measured Elasticsearch Reporter",
+  "description": "Reports measured metrics to elasticsearch",
   "keywords": [
     "measured",
     "metrics",

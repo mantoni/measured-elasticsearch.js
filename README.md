@@ -1,9 +1,7 @@
 # Measured Elasticsearch Reporter
 
-This is a port of the [Java elasticsearch metric reporter][java] for node.
-
-It uses a [measured][] collection and publishes the metrics using the official
-[elasticsearch][] module.
+Reports [measured][] metrics to [elasticsearch][] in the same format as the
+[Java elasticsearch metric reporter][java].
 
 ## Install
 
