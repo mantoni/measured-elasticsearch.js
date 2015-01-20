@@ -5,7 +5,7 @@ Reports [measured][] metrics to [elasticsearch][] in the same format as the
 
 ## Install
 
-    npm install measured-elasticsearch
+    npm install measured elasticsearch measured-elasticsearch
 
 ## Usage
 
