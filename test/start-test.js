@@ -166,4 +166,43 @@ describe('start', function () {
     });
   });
 
+  it('emits "start" event before initial update', function () {
+    var spy = sinon.spy();
+    reporter.on('start', spy);
+
+    reporter.start();
+
+    sinon.assert.calledOnce(spy);
+    sinon.assert.callOrder(spy, client.bulk);
+  });
+
+  it('does not emits "start" event if ping errs', function () {
+    client.ping.yields(new Error());
+    var spy = sinon.spy();
+    reporter.on('start', spy);
+
+    reporter.start();
+
+    sinon.assert.notCalled(spy);
+  });
+
+  it('emits "update" event after sending initial bulk', function () {
+    var spy = sinon.spy();
+    reporter.on('update', spy);
+
+    reporter.start();
+
+    sinon.assert.calledOnce(spy);
+    sinon.assert.callOrder(client.bulk, spy);
+  });
+
+  it('emits "stop" event on stop', function () {
+    var spy = sinon.spy();
+    reporter.on('stop', spy);
+
+    reporter.stop();
+
+    sinon.assert.calledOnce(spy);
+  });
+
 });

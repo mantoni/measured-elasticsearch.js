@@ -39,6 +39,15 @@ reporter.start(60, measured.units.SECONDS);
 - `stop()` stops performing ping and bulk update requests and calls `end()` on
   all registered collections
 
+## Events
+
+The `reporter` instance returned by `forClient` is an EventEmitter that emits
+these events:
+
+- `start` when `start()` was called and the initial ping request was successful
+- `stop` when `stop()` was called
+- `update` after a bulk update was sent to elasticsearch
+
 [java]: https://github.com/elasticsearch/elasticsearch-metrics-reporter-java
 [measured]: https://github.com/felixge/node-measured
 [elasticsearch]: https://www.npmjs.com/package/elasticsearch
