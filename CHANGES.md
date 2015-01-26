@@ -1,5 +1,10 @@
 # Changes
 
+## 1.2.1
+
+- Fix `additionalFields` for `gauge` metrics
+- Disable max listeners warning
+
 ## 1.2.0
 
 - Emit "start", "stop" and "update" events
