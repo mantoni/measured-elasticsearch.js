@@ -205,4 +205,16 @@ describe('start', function () {
     sinon.assert.calledOnce(spy);
   });
 
+  it('emits "error" event on bulk error', function () {
+    var spy = sinon.spy();
+    reporter.on('error', spy);
+    var err = new Error();
+    client.bulk.yields(err);
+
+    reporter.start();
+
+    sinon.assert.calledOnce(spy);
+    sinon.assert.calledWith(spy, err);
+  });
+
 });

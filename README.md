@@ -47,6 +47,7 @@ these events:
 - `start` when `start()` was called and the initial ping request was successful
 - `stop` when `stop()` was called
 - `update` after a bulk update was sent to elasticsearch
+- `error` if a bulk update failed
 
 [java]: https://github.com/elasticsearch/elasticsearch-metrics-reporter-java
 [measured]: https://github.com/felixge/node-measured
