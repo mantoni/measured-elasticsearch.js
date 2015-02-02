@@ -1,5 +1,9 @@
 # Changes
 
+## 1.3.0
+
+- Emit "error" event if bulk update to elasticsearch failed
+
 ## 1.2.1
 
 - Fix `additionalFields` for `gauge` metrics
