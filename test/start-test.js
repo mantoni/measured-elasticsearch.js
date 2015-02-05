@@ -44,6 +44,7 @@ describe('start', function () {
   });
 
   it('retries the ping request every 5 seconds if it failed', function () {
+    reporter.on('error', function () { return; });
     client.ping.yields(new Error());
 
     reporter.start();
@@ -129,6 +130,7 @@ describe('start', function () {
   });
 
   it('stops sending pings', function () {
+    reporter.on('error', function () { return; });
     client.ping.yields(new Error());
 
     reporter.start();
@@ -177,6 +179,7 @@ describe('start', function () {
   });
 
   it('does not emits "start" event if ping errs', function () {
+    reporter.on('error', function () { return; });
     client.ping.yields(new Error());
     var spy = sinon.spy();
     reporter.on('start', spy);
@@ -210,6 +213,18 @@ describe('start', function () {
     reporter.on('error', spy);
     var err = new Error();
     client.bulk.yields(err);
+
+    reporter.start();
+
+    sinon.assert.calledOnce(spy);
+    sinon.assert.calledWith(spy, err);
+  });
+
+  it('emits "error" event if ping fails', function () {
+    var spy = sinon.spy();
+    reporter.on('error', spy);
+    var err = new Error();
+    client.ping.yields(err);
 
     reporter.start();
 
