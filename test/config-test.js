@@ -27,11 +27,13 @@ describe('config', function () {
     client     = new elasticsearch.Client();
     collection = measured.createCollection();
     collection.meter('foo').mark();
+    sinon.stub(client, 'ping');
     sinon.stub(client, 'bulk');
   });
 
   afterEach(function () {
     clock.restore();
+    client.ping.restore();
     client.bulk.restore();
   });
 
@@ -124,6 +126,27 @@ describe('config', function () {
           my       : 'custom'
         })]
     });
+  });
+
+  it('uses configured ping request timeout', function () {
+    reporter = api.forClient(client, {
+      pingTimeout : 12345
+    });
+
+    reporter.start();
+
+    sinon.assert.calledOnce(client.ping);
+    sinon.assert.calledWith(client.ping, { requestTimeout : 12345 });
+  });
+
+  it('does not use a ping request timeout if not configured', function () {
+    reporter = api.forClient(client, {});
+
+    reporter.start();
+
+    sinon.assert.calledOnce(client.ping);
+    sinon.assert.neverCalledWith(client.ping,
+        sinon.match.has('requestTimeout'));
   });
 
 });

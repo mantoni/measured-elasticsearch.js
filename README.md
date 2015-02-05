@@ -32,6 +32,8 @@ reporter.start(60, measured.units.SECONDS);
       `@timestamp`.
     - `additionalFields` object with additional fields to be included for each
       metric
+    - `pingTimeout` number of millis before the initial ping HEAD request times
+      out. The default is the elasticsearch client default (currently `100`).
 - `sendBulk()` sends a bulk update using the elasticsearch client
 - `start([interval[, unit]])` performs a ping request and once successful sends
   bulk updates every `interval * unit` where `interval` defaults to `60` and
