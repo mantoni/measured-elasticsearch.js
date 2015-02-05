@@ -127,6 +127,26 @@ describe('metrics', function () {
     });
   });
 
+  it('meter sends 0 values if mark was never called', function () {
+    collection.meter('mymeter');
+
+    reporter.sendBulk();
+
+    sinon.assert.calledOnce(client.bulk);
+    sinon.assert.calledWith(client.bulk, {
+      body           : [defaults.headerMeter, {
+        name         : 'mymeter',
+        '@timestamp' : '1970-01-01T00:00:00.000Z',
+        count        : 0,
+        m1_rate      : 0,
+        m5_rate      : 0,
+        m15_rate     : 0,
+        mean_rate    : sinon.match.number,
+        units        : 'events/second'
+      }]
+    });
+  });
+
   it('histogram sends the correct json format', function () {
     var histogram = collection.histogram('myhistogram');
     histogram.update(1);
@@ -156,6 +176,30 @@ describe('metrics', function () {
     });
   });
 
+  it('histogram sends 0 values if update was never called', function () {
+    collection.histogram('myhistogram');
+
+    reporter.sendBulk();
+
+    sinon.assert.calledOnce(client.bulk);
+    sinon.assert.calledWith(client.bulk, {
+      body           : [defaults.headerHistogram, {
+        name         : 'myhistogram',
+        '@timestamp' : '1970-01-01T00:00:00.000Z',
+        count        : 0,
+        max          : 0,
+        mean         : 0,
+        min          : 0,
+        p50          : 0,
+        p75          : 0,
+        p95          : 0,
+        p99          : 0,
+        p999         : 0,
+        stddev       : 0
+      }]
+    });
+  });
+
   it('counter sends the correct json format', function () {
     collection.counter('mycount').inc();
 
@@ -167,6 +211,21 @@ describe('metrics', function () {
         name         : 'mycount',
         '@timestamp' : defaults.timestamp,
         count        : 1
+      }]
+    });
+  });
+
+  it('counter sends 0 count if inc was never called', function () {
+    collection.counter('mycount');
+
+    reporter.sendBulk();
+
+    sinon.assert.calledOnce(client.bulk);
+    sinon.assert.calledWith(client.bulk, {
+      body           : [defaults.headerCounter, {
+        name         : 'mycount',
+        '@timestamp' : defaults.timestamp,
+        count        : 0
       }]
     });
   });
