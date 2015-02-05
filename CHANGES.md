@@ -1,5 +1,10 @@
 # Changes
 
+## 1.4.0
+
+- Allow to override the default ping request timeout
+- Emit "error" events if ping requests fail
+
 ## 1.3.1
 
 - Send `0` values if histogram was never updated
