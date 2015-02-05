@@ -1,5 +1,9 @@
 # Changes
 
+## 1.3.1
+
+- Send `0` values if histogram was never updated
+
 ## 1.3.0
 
 - Emit "error" event if bulk update to elasticsearch failed
