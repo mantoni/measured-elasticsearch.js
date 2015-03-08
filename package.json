@@ -16,8 +16,9 @@
   "main": "lib/reporter.js",
   "scripts": {
     "lint": "jslint --color \"**/*.js\"",
-    "start": "mocha --watch",
-    "test": "npm run lint && mocha"
+    "start": "mochify --watch",
+    "test": "npm run lint && mocha && mochify",
+    "wd": "mochify --wd"
   },
   "repository": {
     "type": "git",
@@ -28,8 +29,9 @@
   },
   "devDependencies": {
     "elasticsearch": "^3.1",
-    "measured": "^0.1",
-    "mocha": "^2.1",
+    "measured": "^1.0",
+    "mocha": "^2.2",
+    "mochify": "^2.6",
     "jslint": "^0.7",
     "sinon": "^1.12"
   },
