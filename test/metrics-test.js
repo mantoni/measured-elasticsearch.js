@@ -8,12 +8,11 @@
  */
 'use strict';
 
-var assert        = require('assert');
-var sinon         = require('sinon');
-var measured      = require('measured');
-var elasticsearch = require('elasticsearch');
-var defaults      = require('./fixture/defaults');
-var api           = require('..');
+var assert   = require('assert');
+var sinon    = require('sinon');
+var measured = require('measured');
+var defaults = require('./fixture/defaults');
+var api      = require('..');
 
 
 describe('metrics', function () {
@@ -24,16 +23,14 @@ describe('metrics', function () {
 
   beforeEach(function () {
     clock      = sinon.useFakeTimers();
-    client     = new elasticsearch.Client();
+    client     = { ping: sinon.stub(), bulk: sinon.stub() };
     reporter   = api.forClient(client);
     collection = measured.createCollection();
     reporter.addCollection(collection);
-    sinon.stub(client, 'bulk');
   });
 
   afterEach(function () {
     clock.restore();
-    client.bulk.restore();
   });
 
   it('timer stopwatch sends the correct json format', function () {
@@ -46,6 +43,7 @@ describe('metrics', function () {
 
     sinon.assert.calledOnce(client.bulk);
     sinon.assert.calledWith(client.bulk, {
+      index            : defaults.index,
       body             : [defaults.headerTimer, {
         name           : 'mytime',
         '@timestamp'   :  '1970-01-01T00:00:01.000Z',
@@ -79,6 +77,7 @@ describe('metrics', function () {
 
     sinon.assert.calledOnce(client.bulk);
     sinon.assert.calledWith(client.bulk, {
+      index            : defaults.index,
       body             : [defaults.headerTimer, {
         name           : 'mytime',
         '@timestamp'   : '1970-01-01T00:00:01.000Z',
@@ -114,6 +113,7 @@ describe('metrics', function () {
 
     sinon.assert.calledOnce(client.bulk);
     sinon.assert.calledWith(client.bulk, {
+      index          : defaults.index,
       body           : [defaults.headerMeter, {
         name         : 'mymeter',
         '@timestamp' : '1970-01-01T00:00:02.000Z',
@@ -134,6 +134,7 @@ describe('metrics', function () {
 
     sinon.assert.calledOnce(client.bulk);
     sinon.assert.calledWith(client.bulk, {
+      index          : defaults.index,
       body           : [defaults.headerMeter, {
         name         : 'mymeter',
         '@timestamp' : '1970-01-01T00:00:00.000Z',
@@ -159,6 +160,7 @@ describe('metrics', function () {
 
     sinon.assert.calledOnce(client.bulk);
     sinon.assert.calledWith(client.bulk, {
+      index          : defaults.index,
       body           : [defaults.headerHistogram, {
         name         : 'myhistogram',
         '@timestamp' : '1970-01-01T00:00:02.000Z',
@@ -183,6 +185,7 @@ describe('metrics', function () {
 
     sinon.assert.calledOnce(client.bulk);
     sinon.assert.calledWith(client.bulk, {
+      index          : defaults.index,
       body           : [defaults.headerHistogram, {
         name         : 'myhistogram',
         '@timestamp' : '1970-01-01T00:00:00.000Z',
@@ -207,6 +210,7 @@ describe('metrics', function () {
 
     sinon.assert.calledOnce(client.bulk);
     sinon.assert.calledWith(client.bulk, {
+      index          : defaults.index,
       body           : [defaults.headerCounter, {
         name         : 'mycount',
         '@timestamp' : defaults.timestamp,
@@ -222,6 +226,7 @@ describe('metrics', function () {
 
     sinon.assert.calledOnce(client.bulk);
     sinon.assert.calledWith(client.bulk, {
+      index          : defaults.index,
       body           : [defaults.headerCounter, {
         name         : 'mycount',
         '@timestamp' : defaults.timestamp,
@@ -239,6 +244,7 @@ describe('metrics', function () {
 
     sinon.assert.calledOnce(client.bulk);
     sinon.assert.calledWith(client.bulk, {
+      index          : defaults.index,
       body           : [defaults.headerGauge, {
         name         : 'mygauge',
         '@timestamp' : defaults.timestamp,

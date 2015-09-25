@@ -12,7 +12,7 @@ exports.timestamp = '1970-01-01T00:00:00.000Z';
 
 function header(type) {
   return {
-    index : { _index : exports.index, _type : type}
+    index : { _type : type}
   };
 }
 

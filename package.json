@@ -15,7 +15,7 @@
   },
   "main": "lib/reporter.js",
   "scripts": {
-    "lint": "jslint --color \"**/*.js\"",
+    "lint": "jslint --edition=latest --color \"**/*.js\"",
     "start": "mochify --watch",
     "test": "npm run lint && mocha && mochify",
     "wd": "mochify --wd"
@@ -28,11 +28,10 @@
     "dateformat": "^1.0"
   },
   "devDependencies": {
-    "elasticsearch": "^3.1",
     "measured": "^1.0",
     "mocha": "^2.2",
     "mochify": "^2.6",
-    "jslint": "^0.7",
+    "jslint": "^0.8",
     "sinon": "^1.12"
   },
   "files": [

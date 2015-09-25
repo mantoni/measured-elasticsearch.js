@@ -8,12 +8,11 @@
  */
 'use strict';
 
-var assert        = require('assert');
-var sinon         = require('sinon');
-var measured      = require('measured');
-var elasticsearch = require('elasticsearch');
-var defaults      = require('./fixture/defaults');
-var api           = require('..');
+var assert   = require('assert');
+var sinon    = require('sinon');
+var measured = require('measured');
+var defaults = require('./fixture/defaults');
+var api      = require('..');
 
 
 describe('config', function () {
@@ -24,17 +23,13 @@ describe('config', function () {
 
   beforeEach(function () {
     clock      = sinon.useFakeTimers();
-    client     = new elasticsearch.Client();
+    client     = { ping: sinon.stub(), bulk: sinon.stub() };
     collection = measured.createCollection();
     collection.meter('foo').mark();
-    sinon.stub(client, 'ping');
-    sinon.stub(client, 'bulk');
   });
 
   afterEach(function () {
     clock.restore();
-    client.ping.restore();
-    client.bulk.restore();
   });
 
   it('changes default metric name', function () {
@@ -47,8 +42,9 @@ describe('config', function () {
 
     sinon.assert.calledOnce(client.bulk);
     sinon.assert.calledWith(client.bulk, {
+      index   : 'yo-1970.01',
       body    : [{
-        index : sinon.match.has('_index', 'yo-1970.01')
+        index : sinon.match.object
       }, sinon.match.object]
     });
   });
@@ -63,8 +59,9 @@ describe('config', function () {
 
     sinon.assert.calledOnce(client.bulk);
     sinon.assert.calledWith(client.bulk, {
+      index   : 'metrics-1970.01.01',
       body    : [{
-        index : sinon.match.has('_index', 'metrics-1970.01.01')
+        index : sinon.match.object
       }, sinon.match.object]
     });
   });
@@ -79,7 +76,8 @@ describe('config', function () {
 
     sinon.assert.calledOnce(client.bulk);
     sinon.assert.calledWith(client.bulk, {
-      body : [sinon.match.object, sinon.match.has('tick', defaults.timestamp)]
+      index : sinon.match.string,
+      body  : [sinon.match.object, sinon.match.has('tick', defaults.timestamp)]
     });
   });
 
@@ -96,7 +94,8 @@ describe('config', function () {
 
     sinon.assert.calledOnce(client.bulk);
     sinon.assert.calledWith(client.bulk, {
-      body : [sinon.match.object, sinon.match({
+      index : sinon.match.string,
+      body  : [sinon.match.object, sinon.match({
         server   : 'cheesy-server-name',
         instance : 1
       })]
@@ -119,7 +118,8 @@ describe('config', function () {
 
     sinon.assert.calledOnce(client.bulk);
     sinon.assert.calledWith(client.bulk, {
-      body : [sinon.match.object, sinon.match.object, sinon.match.object,
+      index : sinon.match.string,
+      body  : [sinon.match.object, sinon.match.object, sinon.match.object,
         sinon.match({
           server   : 'cheesy-server-name',
           instance : 1,

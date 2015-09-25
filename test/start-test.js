@@ -8,12 +8,11 @@
  */
 'use strict';
 
-var assert        = require('assert');
-var sinon         = require('sinon');
-var measured      = require('measured');
-var elasticsearch = require('elasticsearch');
-var defaults      = require('./fixture/defaults');
-var api           = require('..');
+var assert   = require('assert');
+var sinon    = require('sinon');
+var measured = require('measured');
+var defaults = require('./fixture/defaults');
+var api      = require('..');
 
 
 describe('start', function () {
@@ -23,16 +22,12 @@ describe('start', function () {
 
   beforeEach(function () {
     clock    = sinon.useFakeTimers();
-    client   = new elasticsearch.Client();
+    client   = { ping: sinon.stub().yields(null), bulk: sinon.stub() };
     reporter = api.forClient(client);
-    sinon.stub(client, 'ping').yields(null);
-    sinon.stub(client, 'bulk');
   });
 
   afterEach(function () {
     clock.restore();
-    client.ping.restore();
-    client.bulk.restore();
   });
 
   it('sends an initial ping request', function () {
@@ -112,7 +107,8 @@ describe('start', function () {
 
     sinon.assert.calledOnce(client.bulk);
     sinon.assert.calledWith(client.bulk, {
-      body : []
+      index : sinon.match.string,
+      body  : []
     });
   });
 
@@ -164,7 +160,8 @@ describe('start', function () {
 
     sinon.assert.calledOnce(client.bulk);
     sinon.assert.calledWith(client.bulk, {
-      body : [sinon.match.object, sinon.match.has('name', 'foo.bar')]
+      index : sinon.match.string,
+      body  : [sinon.match.object, sinon.match.has('name', 'foo.bar')]
     });
   });
 
