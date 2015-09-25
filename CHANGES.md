@@ -1,5 +1,9 @@
 # Changes
 
+## 1.5.0
+
+- Move the index to the top level instead of repeating it on every entry
+
 ## 1.4.0
 
 - Allow to override the default ping request timeout
