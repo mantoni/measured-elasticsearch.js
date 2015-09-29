@@ -149,4 +149,20 @@ describe('config', function () {
         sinon.match.has('requestTimeout'));
   });
 
+  it('uses configured getTime() function to retrieve the time', function () {
+    var getTime = sinon.stub().returns('2015-08-20T12:00:00Z');
+    reporter = api.forClient(client, {
+      indexDateFormat : 'yyyy.mm.dd',
+      getTime         : getTime
+    });
+
+    reporter.sendBulk();
+
+    sinon.assert.calledOnce(getTime);
+    sinon.assert.calledOnce(client.bulk);
+    sinon.assert.calledWith(client.bulk, {
+      index : "metrics-2015.08.20",
+      body  : []
+    });
+  });
 });

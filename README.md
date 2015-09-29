@@ -30,6 +30,8 @@ reporter.start(60, measured.units.SECONDS);
       Defaults to `yyyy.mm`. Uses [dateformat][].
     - `timestampFieldname` the field name of the timestamp. Defaults to
       `@timestamp`.
+    - `getTime` a function returning the current time. The return value is
+      passed to `new Date(time)`. Default to `Date.now()`.
     - `additionalFields` object with additional fields to be included for each
       metric
     - `pingTimeout` number of millis before the initial ping HEAD request times
