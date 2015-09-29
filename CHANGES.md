@@ -1,5 +1,9 @@
 # Changes
 
+## 1.6.0
+
+- Allow to configure a `getTime` function that returns the time to use
+
 ## 1.5.0
 
 - Move the index to the top level instead of repeating it on every entry
