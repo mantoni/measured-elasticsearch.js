@@ -6,7 +6,8 @@
     "measured",
     "metrics",
     "elasticsearch",
-    "reporter"
+    "reporter",
+    "codahale"
   ],
   "author": "Maximilian Antoni <mail@maxantoni.de> (http://maxantoni.de)",
   "homepage": "https://github.com/mantoni/measured-elasticsearch.js",
