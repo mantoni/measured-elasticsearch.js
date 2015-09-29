@@ -17,7 +17,7 @@
   "main": "lib/reporter.js",
   "scripts": {
     "lint": "jslint --edition=latest --color \"**/*.js\"",
-    "start": "mochify --watch",
+    "watch": "mochify --watch",
     "test": "npm run lint && mocha && mochify",
     "wd": "mochify --wd"
   },
