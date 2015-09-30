@@ -165,4 +165,21 @@ describe('config', function () {
       body  : []
     });
   });
+
+  it('uses ISO time to generate index to match with @timestamp', function () {
+    var getTime = sinon.stub().returns('2015-08-20T01:00:00+02:00');
+    reporter = api.forClient(client, {
+      indexDateFormat : 'yyyy.mm.dd',
+      getTime         : getTime
+    });
+
+    reporter.sendBulk();
+
+    sinon.assert.calledOnce(client.bulk);
+    sinon.assert.calledWith(client.bulk, {
+      index : "metrics-2015.08.19",
+      body  : []
+    });
+  });
+
 });
