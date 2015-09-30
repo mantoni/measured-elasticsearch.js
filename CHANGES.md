@@ -1,5 +1,9 @@
 # Changes
 
+## 1.6.1
+
+- Use ISO time to generate index name to match with `@timestamp`
+
 ## 1.6.0
 
 - Allow to configure a `getTime` function that returns the time to use
